@@ -228,10 +228,9 @@ public class Frequencer implements FrequencerInterface{
                6:Ho Hi Ho                    
                7:i Ho                        
                8:i Ho Hi Ho                  
-               9:o                           
-               A:o Hi Ho                     
+               9:o
+               A:o　Hi　Ho
             */
-
             frequencerObject.setTarget("H".getBytes());
             //                                         
             // ****  Please write code to check subByteStartIndex, and subByteEndIndex
