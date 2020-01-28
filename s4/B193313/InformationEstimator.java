@@ -64,18 +64,18 @@ public class InformationEstimator implements InformationEstimatorInterface{
 		    int end = 0; //;;?
 		    int start = end;
 	    	while(start<myTarget.length) {
-				 System.out.write(myTarget[end]);//
+				// System.out.write(myTarget[end]);//
 				end++; //;;?
 				while(partition[end] == false) { 
-			    	 System.out.write(myTarget[end]);//
+			    	// System.out.write(myTarget[end]);//
 			   	 	end++;
 				}
-				 System.out.print("("+start+","+end+")");//
+				// System.out.print("("+start+","+end+")");//
 				myFrequencer.setTarget(subBytes(myTarget, start, end));
 				value1 = value1 + iq(myFrequencer.frequency());
 				start = end;
 	    	}
-	    	 System.out.println(" "+ value1);//
+	    	// System.out.println(" "+ value1);//
 
 		   	// Get the minimal value in "value"
 		    if(value1 < value) value = value1;
@@ -102,8 +102,3 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	System.out.println(">00 "+value);
     }
 }
-				  
-			       
-
-	
-    
