@@ -26,12 +26,12 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	// It is not implement in class library because internal structure of byte[] requires copy.
 	byte [] result = new byte[end - start];
 	for(int i = 0; i<end - start; i++) { result[i] = x[start + i]; };
-	return result;
+		return result;
     }
 
     // IQ: information quantity for a count,  -log2(count/sizeof(space))
     double iq(int freq) {
-	return  - Math.log10((double) freq / (double) mySpace.length)/ Math.log10((double) 2.0);
+		return  - Math.log10((double) freq / (double) mySpace.length)/ Math.log10((double) 2.0);
     }
 
     public void setTarget(byte [] target) { myTarget = target;}
@@ -47,39 +47,39 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	// System.out.println("np="+np+" length="+myTarget.length);
 	double value = Double.MAX_VALUE; // value = mininimum of each "value1".
 
-	for(int p=0; p<np; p++) { // There are 2^(n-1) kinds of partitions.
-	    // binary representation of p forms partition.
-	    // for partition {"ab" "cde" "fg"}
-	    // a b c d e f g   : myTarget
-	    // T F T F F T F T : partition:
-	    partition[0] = true; // I know that this is not needed, but..
-	    for(int i=0; i<myTarget.length -1;i++) {
-		partition[i+1] = (0 !=((1<<i) & p));
-	    }
-	    partition[myTarget.length] = true;
+		for(int p=0; p<np; p++) { // There are 2^(n-1) kinds of partitions.
+		    // binary representation of p forms partition.
+		    // for partition {"ab" "cde" "fg"}
+		    // a b c d e f g   : myTarget
+		    // T F T F F T F T : partition:
+		    partition[0] = true; // I know that this is not needed, but..
+		    for(int i=0; i<myTarget.length -1;i++) {
+				partition[i+1] = (0 !=((1<<i) & p));
+		    }
+		    partition[myTarget.length] = true;
 
-	    // Compute Information Quantity for the partition, in "value1"
-	    // value1 = IQ(#"ab")+IQ(#"cde")+IQ(#"fg") for the above example
-            double value1 = (double) 0.0;
-	    int end = 0;;
-	    int start = end;
-	    while(start<myTarget.length) {
-		// System.out.write(myTarget[end]);
-		end++;;
-		while(partition[end] == false) { 
-		    // System.out.write(myTarget[end]);
-		    end++;
+		    // Compute Information Quantity for the partition, in "value1"
+		    // value1 = IQ(#"ab")+IQ(#"cde")+IQ(#"fg") for the above example
+        	double value1 = (double) 0.0;
+		    int end = 0; //;;?
+		    int start = end;
+	    	while(start<myTarget.length) {
+				 System.out.write(myTarget[end]);//
+				end++; //;;?
+				while(partition[end] == false) { 
+			    	 System.out.write(myTarget[end]);//
+			   	 	end++;
+				}
+				 System.out.print("("+start+","+end+")");//
+				myFrequencer.setTarget(subBytes(myTarget, start, end));
+				value1 = value1 + iq(myFrequencer.frequency());
+				start = end;
+	    	}
+	    	 System.out.println(" "+ value1);//
+
+		   	// Get the minimal value in "value"
+		    if(value1 < value) value = value1;
 		}
-		// System.out.print("("+start+","+end+")");
-		myFrequencer.setTarget(subBytes(myTarget, start, end));
-		value1 = value1 + iq(myFrequencer.frequency());
-		start = end;
-	    }
-	    // System.out.println(" "+ value1);
-
-	    // Get the minimal value in "value"
-	    if(value1 < value) value = value1;
-	}
 	return value;
     }
 
