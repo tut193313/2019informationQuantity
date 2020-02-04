@@ -249,17 +249,17 @@ public class TestCase {
 	    myObject.setSpace("AAA".getBytes());
 	    myObject.setTarget("AA".getBytes());
 	    freq = myObject.frequency();
-	    if(2 != freq) { System.out.println("frequency() for AAA, should return 2, when taget is AA. But it returns "+freq); c++;             myObject.printSuffixArray();}
+	    if(2 != freq) { System.out.println("frequency() for AAA, should return 2, when taget is AA. But it returns "+freq); c++; }
 	    myObject = new Frequencer();
 	    myObject.setSpace("AAA".getBytes());
 	    myObject.setTarget("AAA".getBytes());
 	    freq = myObject.frequency();
-	    if(1 != freq) { System.out.println("frequency() for AAA, should return 1, when taget is AAA. But it returns "+freq); c++;             myObject.printSuffixArray();}
+	    if(1 != freq) { System.out.println("frequency() for AAA, should return 1, when taget is AAA. But it returns "+freq); c++; }
 	    myObject = new Frequencer();
 	    myObject.setSpace("AAA".getBytes());
 	    myObject.setTarget("AAAA".getBytes());
 	    freq = myObject.frequency();
-	    if(0 != freq) { System.out.println("frequency() for AAA, should return 0, when taget is AAAA. But it returns "+freq); c++;              myObject.printSuffixArray();}
+	    if(0 != freq) { System.out.println("frequency() for AAA, should return 0, when taget is AAAA. But it returns "+freq); c++; }
 	    myObject = new Frequencer();
 	    myObject.setSpace("Hi Ho Hi Ho".getBytes());
 	    myObject.setTarget("H".getBytes());
