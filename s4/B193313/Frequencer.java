@@ -64,7 +64,7 @@ public class Frequencer implements FrequencerInterface{
         // if suffix_i = suffix_j, it returns 0;   
         //mySpace同士で比較
         
-        int k,l;
+        int k,l; //i,jの代理
         for(k=i, l=j; (l<mySpace.length&&k<mySpace.length); k++, l++){
             if(mySpace[k]<mySpace[l]){
                 return -1;
@@ -73,7 +73,7 @@ public class Frequencer implements FrequencerInterface{
                 return 1;
             }
         }
-        if(i<j){  //後処理順番
+        if(i<j){
             return 1; 
         }
         return 0;
