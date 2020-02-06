@@ -93,9 +93,9 @@ public class Frequencer implements FrequencerInterface{
         for(int i=0; i<space.length-1; i++){
             for(int j=space.length-1; j>0; j--){
                 if(suffixCompare(suffixArray[j-1],suffixArray[j])==1){
-                    tmp =suffixArray[j-1]; 
-                    suffixArray[j-1]=suffixArray[j];
-                    suffixArray[j]=tmp;
+                    tmp              = suffixArray[j-1]; 
+                    suffixArray[j-1] = suffixArray[j];
+                    suffixArray[j]   = tmp;
                 }
             }
         }
@@ -162,17 +162,22 @@ public class Frequencer implements FrequencerInterface{
         //
         // ここに比較のコードを書け 
         //    
-        int l,m;
-        for(l=i, m=j; (l<mySpace.length&&m<k); l++, m++){
-            if(mySpace[l]<myTarget[m]){
-                return -1;
-            }
-            else if(mySpace[l]>myTarget[m]){
-                return 1;
-            }
+
+        int l;
+        int tarLen = Math.min(mySpace.length-i,k-j);
+    
+        if ( mySpace.length-i < k-j){
+          return -1;
+        }
+        for (l=0; l < tarLen; l++) {
+          if ( mySpace[l+i] < myTarget[l+j] ){
+            return -1;
+          }else if ( mySpace[l+i] > myTarget[l+j]) {
+            return 1;
+          }
         }
         return 0;
-    }
+      }
 
 
     private int subByteStartIndex(int start, int end) {
@@ -201,14 +206,14 @@ public class Frequencer implements FrequencerInterface{
         //                                                                          
         // ここにコードを記述せよ。
         int i;
-        int count=0;
+        int cnt=0; //subByteStartカウント用
         for( i=0; i<mySpace.length; i++){
             if(targetCompare(suffixArray[i], start, end) == 0){
-                count = i;
+                cnt = i;
                 break;
             }
         }                     
-        return count;
+        return cnt;
     }
 
     private int subByteEndIndex(int start, int end) {
@@ -235,16 +240,22 @@ public class Frequencer implements FrequencerInterface{
         // if target_start_end is"i", it will return 9 for "Hi Ho Hi Ho".    
         //                                                                   
         //　ここにコードを記述せよ
-        int i; 
-        int count=suffixArray.length;                                         
-        for(i=0; i<mySpace.length; i++){
-            if(targetCompare(suffixArray[i], start, end) == 1){
-                count = i;
-                break;
-            }
-        }         
-        return count;        
-    }
+
+        int cnt; //subByteEndカウント用
+        boolean f = false;
+        for(cnt=0; cnt<suffixArray.length; cnt++){
+          if(targetCompare(suffixArray[cnt], start, end) == 0){
+            f = true;
+          }
+          if (targetCompare(suffixArray[cnt], start, end) == 1 && f == true){
+            return cnt;
+          }
+        }
+        if(f == true){
+          return suffixArray.length;
+        }
+        return 0;
+      }
 
 
     // Suffix Arrayを使ったプログラムのホワイトテストは、
