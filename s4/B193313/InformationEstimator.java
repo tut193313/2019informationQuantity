@@ -90,8 +90,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	// DP実装
 	for (int i = 0; i < myTarget.length; i++) {
 		for (int j = 0; j <= i; j++) {
-		  int start = j ;
-		  int end = i+1 ;
+		  int start = j, end = i+1;
 		  myFrequencer.setTarget(subBytes(myTarget, start, end));
 		  value = iq(myFrequencer.frequency());
 		   
