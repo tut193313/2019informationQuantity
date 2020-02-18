@@ -20,6 +20,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
     byte [] myTarget; // data to compute its information quantity
     byte [] mySpace;  // Sample space to compute the probability
     FrequencerInterface myFrequencer;  // Object for counting frequency
+	double tmp_A[]={0};
 
     byte [] subBytes(byte [] x, int start, int end) {
 	// corresponding to substring of String for  byte[] ,
@@ -34,7 +35,10 @@ public class InformationEstimator implements InformationEstimatorInterface{
 		return  - Math.log10((double) freq / (double) mySpace.length)/ Math.log10((double) 2.0);
     }
 
-    public void setTarget(byte [] target) { myTarget = target;}
+    public void setTarget(byte [] target) { 
+		myTarget = target; 
+		tmp_A = new double[myTarget.length];  // tmp_Aをnewする
+	}
     public void setSpace(byte []space) { 
 	myFrequencer = new Frequencer();
 	mySpace = space; myFrequencer.setSpace(space); 
@@ -47,6 +51,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	// System.out.println("np="+np+" length="+myTarget.length);
 	double value = Double.MAX_VALUE; // value = mininimum of each "value1".
 
+		/*
 		for(int p=0; p<np; p++) { // There are 2^(n-1) kinds of partitions.
 		    // binary representation of p forms partition.
 		    // for partition {"ab" "cde" "fg"}
@@ -81,6 +86,22 @@ public class InformationEstimator implements InformationEstimatorInterface{
 		    if(value1 < value) value = value1;
 		}
 	return value;
+	*/
+	// DP実装
+	for (int i = 0; i < myTarget.length; i++) {
+		for (int j = 0; j <= i; j++) {
+		  int start = j, end = i+1;
+		  myFrequencer.setTarget(subBytes(myTarget, start, end));
+		  value = iq(myFrequencer.frequency());
+		   
+		  if(j == 0){
+			tmp_A[i] = value;
+		  }else{
+			tmp_A[i] = Math.min(tmp_A[i], tmp_A[j-1] + value);
+		  }
+		}
+	  }
+	  return tmp_A[myTarget.length-1];
     }
 
     public static void main(String[] args) {
